@@ -2,6 +2,7 @@
 # coding: utf-8
 
 import os,socket,sys,re,time,errno
+from fnmatch import fnmatch
 
 def showmytools():
     print('    """find(path,filename)"""\n\
@@ -42,7 +43,6 @@ def find(path,name):
 #    for r,d,f in os.walk(os.path.expanduser(path)):
 #        if name in f:
 #            print(os.path.join(r,name))
-    from fnmatch import fnmatch
     res=[]
     for r,d,f in os.walk(os.path.expanduser(path)):
         for i in f:
@@ -164,7 +164,7 @@ def rotateby(key,txt,back=None):
     if back:
         key=26-key
     else:
-        while key >= 26:
+        while key > 26:
             print('26 letters ...')
             key=input('Rotate by : ')
     r=aZ[key:]+aZ[0:key]
