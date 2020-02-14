@@ -3,6 +3,7 @@
 
 import os,socket,sys,re,time,errno
 from fnmatch import fnmatch
+from datetime import datetime
 
 def showmytools():
     print('    """find(path,filename)"""\n\
@@ -30,7 +31,17 @@ def showmytools():
     """sshcmd(user,ip,[port])"""\n\
     """scanports(ip,*ports)"""\n\
     """exploresqlitedb(db_file (abs. path)"""\n\
-    """epoch2date(unixtime)"""')
+    """epoch2date(unixtime)"""\n\
+    """utc_epoch()"""\n\
+    """epoch()"""')
+
+
+def epoch():
+    return datetime.now().strftime('%s')
+
+
+def utc_epoch():
+    return datetime.utcnow().strftime('%s')
 
 
 def epoch2date(e):
