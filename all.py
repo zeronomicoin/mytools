@@ -11,6 +11,7 @@ def showmytools():
     """cgrep(regex,file)"""\n\
     """uniq(file)"""\n\
     """myIPv4()""""\n\
+    """ipinfo()""""\n\
     """infoservice(domain|host|IP,port)"""\n\
     """spingport(domain|host|IP,port)"""\n\
     """pingport(domain|host|IP,port)"""\n\
@@ -166,6 +167,12 @@ def myIPv4(url='http://ping.eu'):
     print('IP is %s'%ip[0])
     p.close()
 
+
+def ipinfo(url='http://ipinfo.io'):
+    from requests import get
+    r=get(url).json()
+    for i in r:
+        print('%-10s%s'%(i,r[i]))
 
 
 def rotateby(key,txt,back=None):
