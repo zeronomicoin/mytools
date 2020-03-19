@@ -3,6 +3,7 @@
 
 import os,socket,sys,re,time,errno
 from datetime import datetime
+from fnmatch import fnmatch
 
 def showmytools():
     print('    """find(path,filename)"""\n\
@@ -54,7 +55,6 @@ def find(path,name):
 #    for r,d,f in os.walk(os.path.expanduser(path)):
 #        if name in f:
 #            print(os.path.join(r,name))
-    from fnmatch import fnmatch
     res=[]
     for r,d,f in os.walk(os.path.expanduser(path)):
         for i in f:
