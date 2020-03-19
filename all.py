@@ -3,7 +3,6 @@
 
 import os,socket,sys,re,time,errno
 from datetime import datetime
-from fnmatch import fnmatch
 
 def showmytools():
     print('    """find(path,filename)"""\n\
@@ -47,7 +46,7 @@ def utc_epoch():
 
 def epoch2date(e):
     from datetime import datetime
-    print(datetime.fromtimestamp(e).strftime('%c'))
+    print(datetime.fromtimestamp(float(e)).strftime('%c'))
 
 
 def find(path,name):
@@ -55,6 +54,7 @@ def find(path,name):
 #    for r,d,f in os.walk(os.path.expanduser(path)):
 #        if name in f:
 #            print(os.path.join(r,name))
+    from fnmatch import fnmatch
     res=[]
     for r,d,f in os.walk(os.path.expanduser(path)):
         for i in f:
@@ -223,7 +223,6 @@ def hex2bin(x):
         print(e)
 
 
-
 def funnycrypt(dico,h):
     """funnycrypt(dico,h)"""
     import crypt,time
@@ -245,8 +244,7 @@ def funnycrypt(dico,h):
     print('%d tests in %.3f sec.'%(count,tot))
     print(timedelta(seconds=tot))
     
-    
-    
+        
 def brutezip(zfile,dico):
     """brutezip(zfile,dico)"""
     import zipfile
@@ -271,7 +269,6 @@ def brutezip(zfile,dico):
         print(e)
 
 
-
 def reverselookup(ip):
     """reverselookup(ip|domain)"""
     try:
@@ -280,7 +277,6 @@ def reverselookup(ip):
         print(r[2])
     except Exception as e:
         print(e)
-
 
 
 def dnsrequest(domain):
@@ -294,7 +290,6 @@ def dnsrequest(domain):
     if not res.answers: print('Domain not found')
 
 
-
 def quadArecord(dom):
     """quadArecord(domain)"""
     try:
@@ -302,7 +297,6 @@ def quadArecord(dom):
         return ip6
     except Exception as e:
         print('%s\n%s not found'%(e,dom))
-
 
 
 def hashme(algo,me):
@@ -336,6 +330,7 @@ def hashfile(algo,fic):
 
 def findandhash(path,fic,algo):
     """findandhash(path,file*name,algo)"""
+    from fnmatch import fnmatch
     res=[]
     for r,d,f in os.walk(os.path.expanduser(path)):
         #if fic in f:
@@ -351,8 +346,6 @@ def findandhash(path,fic,algo):
             
             
             
-
-
 lenhash={
     "md5"   : 32,
     "sha1"  : 40,
@@ -361,6 +354,7 @@ lenhash={
     "sha256": 64,
     "sha512": 128,
     }
+
 
 def shathat(dico,h):                                                         
     """shathat(dico,h)"""
@@ -473,61 +467,61 @@ def sshcmd(user,ip,port=22):
 
 
 def scanports(ip,*args):
-	socket.setdefaulttimeout(5)
-	for i in args:
-		try:
-			s=socket.socket()
-			r=s.connect_ex((ip,int(i)))
-			if r==0:
-				try:
-					print('%-16s on %-5d   Open (%s)'%(ip,i,socket.getservbyport(i)))
-				except Exception as e:
-					print('%-16s on %-5s   Open (%s)'%(ip,i,e))
-				finally:
-					s.close()
-			else:
-				continue
-#				if errno.errorcode[r]=="ECONNREFUSED":
-#					continue
-#				if errno.errorcode[r]=="EHOSTUNREACH":
-#					print('%s : Host unreachable ...'%ip)
-#					return
-#				if errno.errorcode[r]=="ENETUNREACH":
-#					print('Network unreachable.')
-#					return
-		except Exception as e:
-			print(e)
-			pass
+    socket.setdefaulttimeout(5)
+    for i in args:
+        try:
+            s=socket.socket()
+            r=s.connect_ex((ip,int(i)))
+            if r==0:
+                try:
+                    print('%-16s on %-5d   Open (%s)'%(ip,i,socket.getservbyport(i)))
+                except Exception as e:
+                    print('%-16s on %-5s   Open (%s)'%(ip,i,e))
+                finally:
+                    s.close()
+            else:
+                continue
+#                if errno.errorcode[r]=="ECONNREFUSED":
+#                    continue
+#                if errno.errorcode[r]=="EHOSTUNREACH":
+#                    print('%s : Host unreachable ...'%ip)
+#                    return
+#                if errno.errorcode[r]=="ENETUNREACH":
+#                    print('Network unreachable.')
+#                    return
+        except Exception as e:
+            print(e)
+            pass
 
 
 
 def exploresqlitedb(db_file):
-	import sqlite3
-	try:
-		with open(db_file) as f:
-			f.read(256)
-	except IOError as e:
-		print(e)
-		return
-	try:
-		db=sqlite3.connect(db_file)
-		c=db.cursor()
-		c.execute('select * from sqlite_master')
-		for i in c.fetchall():
-			print(i)
-	except Exception as e:
-		print(e)
-		return
-	while True:
-		tab=raw_input('\nTable Name : ')
-		if not tab: return
-		try:
-			c.execute('select * from '+tab)
-			for i in c.fetchall():
-				print(i)
-		except Exception as e:
-			print(e)
-			pass
+    import sqlite3
+    try:
+        with open(db_file) as f:
+            f.read(256)
+    except IOError as e:
+        print(e)
+        return
+    try:
+        db=sqlite3.connect(db_file)
+        c=db.cursor()
+        c.execute('select * from sqlite_master')
+        for i in c.fetchall():
+            print(i)
+    except Exception as e:
+        print(e)
+        return
+    while True:
+        tab=raw_input('\nTable Name : ')
+        if not tab: return
+        try:
+            c.execute('select * from '+tab)
+            for i in c.fetchall():
+                print(i)
+        except Exception as e:
+            print(e)
+            pass
 
 
 
