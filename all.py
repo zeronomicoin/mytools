@@ -2,7 +2,6 @@
 # coding: utf-8
 
 import os,socket,sys,re,time,errno
-from fnmatch import fnmatch
 from datetime import datetime
 
 def showmytools():
@@ -10,8 +9,8 @@ def showmytools():
     """grep(regex,file)"""\n\
     """cgrep(regex,file)"""\n\
     """uniq(file)"""\n\
-    """myIPv4()""""\n\
-    """ipinfo()""""\n\
+    """myIPv4()"""\n\
+    """ipinfo()"""\n\
     """infoservice(domain|host|IP,port)"""\n\
     """spingport(domain|host|IP,port)"""\n\
     """pingport(domain|host|IP,port)"""\n\
@@ -55,6 +54,7 @@ def find(path,name):
 #    for r,d,f in os.walk(os.path.expanduser(path)):
 #        if name in f:
 #            print(os.path.join(r,name))
+    from fnmatch import fnmatch
     res=[]
     for r,d,f in os.walk(os.path.expanduser(path)):
         for i in f:
