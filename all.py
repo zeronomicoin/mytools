@@ -29,6 +29,7 @@ def showmytools():
     """shathat(dico,h)"""\n\
     """deltadirectory(src_dir,dst_dir) (abs. path)"""\n\
     """sshcmd(user,ip,[port])"""\n\
+    """sshbot(user)"""\n\
     """scanports(ip,*ports)"""\n\
     """exploresqlitedb(db_file (abs. path)"""\n\
     """epoch2date(unixtime)"""\n\
@@ -437,7 +438,6 @@ def deltadirectory(src,dst):
         return
 
 
-
 def sshcmd(user,ip,port=22):
     """sshcmd(user,ip)"""
     from pexpect import pxssh
@@ -446,24 +446,61 @@ def sshcmd(user,ip,port=22):
           s=pxssh.pxssh()
           pswd=enterpassword(user)
           s.login(ip,user,pswd,port,auto_prompt_reset=False)
-          #s.prompt()
-          #print(s.before)
           s.interact()
       except Exception as e:
           print(e)
           return
-      #while True:
-      #    cmd=raw_input(' > ')
-      #    if not cmd: 
-      #        print('Logout')
-      #        return
-      #    s.sendline(cmd)
-      #    s.prompt()
-      #    print(s.before)
     except Exception: 
       return
 
 
+def sshbot(user):
+    from pexpect import pxssh
+    from mytools.all import enterpassword
+    from threading import Thread
+    
+    def ssh(user,ip):
+        try:  
+          try:
+              s=pxssh.pxssh()
+              s.login(ip,user,pswd)
+              s.sendline('hostname && ls /')
+              s.prompt()
+              print(s.before)
+              for i in cmds:
+                  s.sendline(i)
+                  s.prompt()
+                  print(s.before)
+          except Exception as e:
+              print(e)
+        except Exception: 
+          return
+    
+    global pswd
+    q1=raw_input('Same password on every machines (Y/n) ? : ')
+    if q1.lower().startswith('y') or not q1:
+        #pswd=raw_input('Password : ')
+        pswd=enterpassword(user)
+    
+    ls=[]
+    while True:
+    	ip=raw_input('IP : ')
+    	if not ip: break
+    	ls.append(ip)
+    
+    cmds=[]
+    while True:
+       cmd=raw_input(' Command : ')
+       if not cmd: break
+       cmds.append(cmd)
+    
+    for j in ls:
+        if q1.lower().startswith('n'):
+            print('\n%s %s\'s password :'%(j,user))
+            pswd=enterpassword(user)
+        print('\nHost :\n\t%s\n'%j)
+        t=Thread(ssh(user,j))
+        t.start()
 
 
 def scanports(ip,*args):
