@@ -3,6 +3,8 @@
 
 import os,socket,sys,re,time,errno
 from datetime import datetime
+from pexpect import pxssh
+from threading import Thread
 
 def showmytools():
     print('    """find(path,filename)"""\n\
@@ -440,7 +442,6 @@ def deltadirectory(src,dst):
 
 def sshcmd(user,ip,port=22):
     """sshcmd(user,ip)"""
-    from pexpect import pxssh
     try:  
       try:
           s=pxssh.pxssh()
@@ -455,9 +456,7 @@ def sshcmd(user,ip,port=22):
 
 
 def sshbot(user):
-    from pexpect import pxssh
     from mytools.all import enterpassword
-    from threading import Thread
     
     def ssh(user,ip):
         try:  
