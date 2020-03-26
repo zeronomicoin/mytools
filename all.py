@@ -171,8 +171,12 @@ def myIPv4(url='http://ping.eu'):
     p.close()
 
 
-def ipinfo(url='http://ipinfo.io'):
+def ipinfo(ip=None):
     from requests import get
+    if ip==None:
+        url='http://ipinfo.io/'
+    else:
+        url='http://ipinfo.io/'+ip
     r=get(url).json()
     for i in r:
         print('%-10s%s'%(i,r[i]))
