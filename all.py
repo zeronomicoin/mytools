@@ -162,13 +162,15 @@ def pingport(x,y):
 
 
 def myIPv4(url='http://ping.eu'):
-    import urllib2,re
+    import urllib2
     r=urllib2.Request(url)
     p=urllib2.urlopen(r)
     reg=re.compile('\d+\.\d+\.\d+\.\d+')
     ip=reg.findall(p.read())
-    print('IP is %s'%ip[0])
     p.close()
+    return ip[0]
+
+publicIP = myIPv4
 
 
 def ipinfo(ip=None):
@@ -562,6 +564,7 @@ def exploresqlitedb(db_file):
         except Exception as e:
             print(e)
             pass
+
 
 
 
