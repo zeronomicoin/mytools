@@ -1,5 +1,7 @@
 
-# ln -sf /home/username/mytools/ /usr/lib/python2.7/site-packages/
+# ln -sf /home/username/mytools/ /usr/lib/python2.7/                  # debian_based systems
+# ln -sf /home/username/mytools/ /usr/lib/python2.7/site-packages/    # redhat_based systems
+
 
 $ python
 Python 2.7.15 (default, Oct 15 2018, 15:24:06) 
